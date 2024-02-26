@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
-# Bash script that displays the PID, along with the process name, of processes whose name contain the word bash
-pgrep -af bash | while read -r line; do
-    pid=$(echo "$line" | awk '{print $1}')
-    process_name=$(echo "$line" | awk '{$1=""; print $0}')
-    echo "$pid $process_name"
+# Bash script that displays the PID, along with the process name, of processes whose name contain the word bash.
+script_pid=$$
+for pid in $(pgrep -f bash); do
+    # Exclude the current script's PID
+    if [ "$pid" != "$script_pid" ]; then
+        process_name=$(ps -p "$pid" -o comm=)
+        echo "$pid $process_name"
+    fi
 done

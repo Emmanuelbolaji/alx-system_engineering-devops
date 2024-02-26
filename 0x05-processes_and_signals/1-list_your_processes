@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 # Bash script that displays a list of currently running processes
-echo "PID   | PPID  | USER      | COMMAND"
-ps ax -o pid,ppid,user,cmd --forest --no-headers | awk '{printf "%-6s| %-6s| %-10s| %s\n", $1, $2, $3, $4}'
+echo "USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND"
+ps ax -o user,pid,%cpu,%mem,vsz,rss,tty,stat,start,time,command --forest --no-headers

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # a Bash script that pings an IP address passed as an argument
 if [ $# -ne 1 ]; then
-    echo "$0 {IP_ADDRESS}"
-    exit 1
+echo "$0 {IP_ADDRESS}"
+exit 1
 fi
 ping -c 5 $1

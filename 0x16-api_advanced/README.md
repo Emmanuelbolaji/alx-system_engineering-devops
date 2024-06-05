@@ -17,9 +17,15 @@ This directory contains Python scripts that demonstrate advanced API handling, i
 
 ## Files
 - `0-subs.py`: Contains the function to fetch the number of subscribers for a given subreddit.
+- `0-main.py`: Script to test the function via command line arguments.
+- `1-top_ten.py`: Contains the function to fetch and print the titles of the first 10 hot posts for a given subreddit.
+- `1-main.py`: Script to test the function via command line arguments.
 
 ## Usage
 Make sure the script is executable and run it as follows:
 
 ```sh
+./0-subs.py
 ./0-main.py <subreddit>
+./1-top_ten.py
+./1-main.py <subreddit>

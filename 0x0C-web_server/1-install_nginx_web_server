@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Installs and configures Nginx web server to listen on port 80 and serve "Hello World!"
+apt-get update
+apt-get install -y nginx
+if ! pgrep nginx > /dev/null
+then
+    /etc/init.d/nginx start
+fi
+sed -i 's/listen 80 default_server;/listen 80;/' /etc/nginx/sites-available/default
+echo "Hello World!" > /var/www/html/index.html
+/etc/init.d/nginx reload

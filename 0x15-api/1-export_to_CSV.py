@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """
-Script to fetch and display TODO list progress for a given employee ID
-using a REST API.
+Script to fetch TODO list data for a given employee ID and export to CSV.
 """
 
 import sys
@@ -19,25 +18,33 @@ def get_employee_todo_progress(employee_id):
 
     user_response = requests.get(user_url)
     user_data = user_response.json()
-    employee_name = user_data['name']
+    username = user_data['username']
 
     todos_response = requests.get(todos_url)
     todos_data = todos_response.json()
 
-    total_tasks = len(todos_data)
-    completed_tasks = sum(1 for todo in todos_data if todo['completed'])
+    return username, todos_data
 
-    print(f"Employee {employee_name} is done with "
-          f"tasks({completed_tasks}/{total_tasks}):")
+def export_to_csv(employee_id, username, todos_data):
+    """
+    Export employee TODO list data to a CSV file.
+    """
+    filename = f"{employee_id}.csv"
 
-    for todo in todos_data:
-        if todo['completed']:
-            print(f"\t {todo['title']}")
+    with open(filename, mode='w', newline='') as file:
+        writer = csv.writer(file, quoting=csv.QUOTE_ALL)
+        for todo in todos_data:
+            writer.writerow([
+                employee_id,
+                username,
+                str(todo['completed'])
+                todo['title']
+                ])
 
 
-if __name__ == "__main__":
+if __name__== "__main__":
     if len(sys.argv) != 2:
-        print("Usage: python3 script_name.py <employee_id>")
+        print("Usage: python3 1-export_to_CSV.py <employee_id>")
         sys.exit(1)
 
     try:
@@ -46,4 +53,6 @@ if __name__ == "__main__":
         print("Error: Employee ID must be an integer.")
         sys.exit(1)
 
-    get_employee_todo_progress(employee_id)
+    username, todos_data = get_employee_todo_data(employee_id)
+    export_to_csv(employee_id, username, todos_data)
+    print(f"Data exported to {employee_id}.csv")
